@@ -1,16 +1,58 @@
-/*
-Pak Budi adalah seorang pedagang yang harus mengirim barang setiap hari ke beberapa kota. Dia memiliki tiga pilihan jasa ekspedisi untuk mengirim barang berdasarkan berat dan tujuan pengiriman:
-1. JNE
-- Biaya Rp10.000/kg untuk pengiriman dalam kota.
-- Biaya Rp20.000/kg untuk pengiriman luar kota.
-- Diskon 50% jika berat barang lebih dari 10 kg.
-2. SiCepat
-- Biaya Rp8.000/kg untuk pengiriman dalam kota.
-- Biaya Rp18.000/kg untuk pengiriman luar kota.
-- Gratis ongkir jika berat barang lebih dari 15 kg.
-3. Gojek
-- Hanya bisa mengirim dalam kota dengan biaya Rp12.000/kg.
-- Diskon Rp10.000 jika berat barang lebih dari 5 kg.
-*/
+#include <iostream>
+#include <iostream>
+#include <string>
+using namespace std;
 
-// Hapus komentar yang berisi soal sebelum memasukkan kode untuk jawaban
+int main() {
+    string ekspedisi, tujuan;
+    double berat, biaya = 0;
+
+    // input data dari user
+    cout << "Pilih ekspedisi (JNE/SiCepat/Gojek): ";
+    cin >> ekspedisi;
+    cout << "Tujuan (dalam/luar): ";
+    cin >> tujuan;
+    cout << "Berat barang (kg): ";
+    cin >> berat;
+
+    // cek ekspedisi yang dipilih
+    if (ekspedisi == "JNE") {
+        // biaya dasar JNE
+        if (tujuan == "dalam") biaya = 10000 * berat;
+        else biaya = 20000 * berat;
+
+        // diskon 50% kalau berat > 10 kg
+        if (berat > 10) biaya *= 0.5;
+    }
+    else if (ekspedisi == "SiCepat") {
+        // biaya dasar SiCepat
+        if (tujuan == "dalam") biaya = 8000 * berat;
+        else biaya = 18000 * berat;
+
+        // gratis ongkir kalau berat > 15 kg
+        if (berat > 15) biaya = 0;
+    }
+    else if (ekspedisi == "Gojek") {
+        // Gojek hanya untuk dalam kota
+        if (tujuan == "dalam") {
+            biaya = 12000 * berat;
+            // potongan Rp10.000 kalau berat > 5 kg
+            if (berat > 5) biaya -= 10000;
+            // jangan sampai minus
+            if (biaya < 0) biaya = 0;
+        } else {
+            cout << "Gojek hanya bisa dalam kota.\n";
+            return 0;
+        }
+    }
+    else {
+        // kalau nama ekspedisi tidak dikenali
+        cout << "Ekspedisi tidak tersedia.\n";
+        return 0;
+    }
+
+    // tampilkan hasil
+    cout << "Total biaya pengiriman: Rp" << biaya << endl;
+    return 0;
+}
+
